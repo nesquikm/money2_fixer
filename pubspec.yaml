@@ -1,0 +1,13 @@
+name: money2_fixer
+description: This is just a 'fix' package for Money2
+version: 1.0.0
+repository: https://github.com/nesquikm/money2_fixer
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dev_dependencies:
+  lints: ^4.0.0
+  test: ^1.21.0
+dependencies:
+  money2: ^4.0.0
