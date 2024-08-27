@@ -5,10 +5,15 @@ extension MoneyFixer on Money {
   ///
   /// The [amount] is scaled to match the currency selected via
   /// [currency].
-  static Money parseWithCurrencyImproved(String amount, Currency currency,
-          {int? scale}) =>
+  static Money parseWithCurrencyImproved(
+    String amount,
+    Currency currency, {
+    int? scale,
+  }) =>
       Money.fromFixedWithCurrency(
-          Fixed.parse(amount, scale: scale ?? currency.scale), currency);
+        Fixed.parse(amount, scale: scale ?? currency.decimalDigits),
+        currency,
+      );
 
   /// Formats a [Money] value into a String according to the
   /// passed [pattern].
@@ -57,11 +62,12 @@ extension MoneyFixer on Money {
 extension CurrencyFixer on Currency {
   Map<String, dynamic> toJson() {
     return {
-      'code': code,
-      'scale': scale,
+      'code': isoCode,
+      'scale': decimalDigits,
       'symbol': symbol,
       'pattern': pattern,
-      'invertSeparators': invertSeparators,
+      'groupSeparator': groupSeparator,
+      'decimalSeparator': decimalSeparator,
       'country': country,
       'unit': unit,
       'name': name,
@@ -72,12 +78,13 @@ extension CurrencyFixer on Currency {
     return Currency.create(
       json['code'],
       json['scale'],
-      symbol: json['symbol'],
-      pattern: json['pattern'],
-      invertSeparators: json['invertSeparators'],
-      country: json['country'],
-      unit: json['unit'],
-      name: json['name'],
+      symbol: json['symbol'] ?? r'$',
+      pattern: json['pattern'] ?? Currency.defaultPattern,
+      groupSeparator: json['groupSeparator'] ?? ',',
+      decimalSeparator: json['decimalSeparator'] ?? '.',
+      country: json['country'] ?? '',
+      unit: json['unit'] ?? '',
+      name: json['name'] ?? '',
     );
   }
 }
@@ -93,7 +100,7 @@ extension FixedFixer on Fixed {
   static Fixed fromJson(Map<String, dynamic> json) {
     return Fixed.fromBigInt(
       BigInt.parse(json['minorUnits']),
-      scale: json['scale'],
+      scale: json['scale'] ?? 2,
     );
   }
 }
