@@ -18,7 +18,11 @@ void main() {
       expect(c, isNotNull);
       final str = scale == 0 ? '0' : '0.${'0' * (scale - 1)}1';
       final fmt = scale == 0 ? '0' : '0.${'0' * scale}';
-      expect(Money.fromFixedWithCurrency(Fixed.parse(str, scale: scale), c!).amount.format(fmt), str,
+      expect(
+          Money.fromFixedWithCurrency(Fixed.parse(str, scale: scale), c!)
+              .amount
+              .format(fmt),
+          str,
           reason: 'Failed with $scale scale');
     }
   });
