@@ -10,22 +10,22 @@ void main() {
 
   test('Fixed serialization', () {
     final f0 = Fixed.parse(amount);
-    final json = f0.toJson();
-    final f1 = FixedFixer.fromJson(json);
+    final json = f0.toJsonImproved();
+    final f1 = FixedFixer.fromJsonImproved(json);
     expect(f1.toString(), amount);
   });
 
   test('Fixed jsonEncode', () {
     final f0 = Fixed.parse(amount);
-    final json = jsonEncode(f0.toJson());
-    final f1 = FixedFixer.fromJson(jsonDecode(json));
+    final json = jsonEncode(f0.toJsonImproved());
+    final f1 = FixedFixer.fromJsonImproved(jsonDecode(json));
     expect(f1.toString(), amount);
   });
 
   test('Currency serialization (base)', () {
     final c0 = Currency.create('ROFL', 9);
-    final json = c0.toJson();
-    final c1 = CurrencyFixer.fromJson(json);
+    final json = c0.toJsonImproved();
+    final c1 = CurrencyFixer.fromJsonImproved(json);
     expect(c0, c1);
 
     expect(c1.isoCode, c0.isoCode);
@@ -51,8 +51,8 @@ void main() {
       unit: 'abux',
       name: 'AA bux',
     );
-    final json = c0.toJson();
-    final c1 = CurrencyFixer.fromJson(json);
+    final json = c0.toJsonImproved();
+    final c1 = CurrencyFixer.fromJsonImproved(json);
     expect(c0, c1);
 
     expect(c1.isoCode, c0.isoCode);
@@ -71,7 +71,21 @@ void main() {
     final m0 = MoneyFixer.parseWithCurrencyImproved(amount, c);
     final json = m0.toJsonImproved();
     final m1 = MoneyFixer.fromJsonImproved(json);
+    expect(m0.integerPart, m1.integerPart);
+    expect(m0.decimalPart, m1.decimalPart);
     expect(m1.compareTo(m0), 0);
     expect(m1.minorUnits, BigInt.parse(minorUnits));
+  });
+
+  test('Money serialization (Money\'s toJson is faulty)', () {
+    final c = Currency.create('c100', 100, symbol: '=100=');
+    Currencies().register(c);
+    final m0 = MoneyFixer.parseWithCurrencyImproved(amount, c);
+    final json = m0.toJson();
+    final m1 = Money.fromJson(json);
+    expect(m0.integerPart, isNot(m1.integerPart));
+    expect(m0.decimalPart, isNot(m1.decimalPart));
+    expect(m1.compareTo(m0), isNot(0));
+    expect(m1.minorUnits, isNot(BigInt.parse(minorUnits)));
   });
 }

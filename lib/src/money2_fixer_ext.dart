@@ -46,21 +46,21 @@ extension MoneyFixer on Money {
 
   Map<String, dynamic> toJsonImproved() {
     return {
-      'amount': amount.toJson(),
-      'currency': currency.toJson(),
+      'amount': amount.toJsonImproved(),
+      'currency': currency.toJsonImproved(),
     };
   }
 
   static Money fromJsonImproved(Map<String, dynamic> json) {
     return Money.fromFixedWithCurrency(
-      FixedFixer.fromJson(json['amount']),
-      CurrencyFixer.fromJson(json['currency']),
+      FixedFixer.fromJsonImproved(json['amount']),
+      CurrencyFixer.fromJsonImproved(json['currency']),
     );
   }
 }
 
 extension CurrencyFixer on Currency {
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJsonImproved() {
     return {
       'isoCode': isoCode,
       'decimalDigits': decimalDigits,
@@ -74,7 +74,7 @@ extension CurrencyFixer on Currency {
     };
   }
 
-  static Currency fromJson(Map<String, dynamic> json) {
+  static Currency fromJsonImproved(Map<String, dynamic> json) {
     return Currency.create(
       json['isoCode'],
       json['decimalDigits'],
@@ -90,14 +90,14 @@ extension CurrencyFixer on Currency {
 }
 
 extension FixedFixer on Fixed {
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJsonImproved() {
     return {
       'minorUnits': minorUnits.toString(),
       'scale': scale,
     };
   }
 
-  static Fixed fromJson(Map<String, dynamic> json) {
+  static Fixed fromJsonImproved(Map<String, dynamic> json) {
     return Fixed.fromBigInt(
       BigInt.parse(json['minorUnits']),
       scale: json['scale'] ?? 2,
