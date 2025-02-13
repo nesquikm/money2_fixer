@@ -44,14 +44,14 @@ extension MoneyFixer on Money {
     }).replaceAllMapped(RegExp(r'S'), (m) => currency.symbol);
   }
 
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJsonImproved() {
     return {
       'amount': amount.toJson(),
       'currency': currency.toJson(),
     };
   }
 
-  static Money fromJson(Map<String, dynamic> json) {
+  static Money fromJsonImproved(Map<String, dynamic> json) {
     return Money.fromFixedWithCurrency(
       FixedFixer.fromJson(json['amount']),
       CurrencyFixer.fromJson(json['currency']),
@@ -62,8 +62,8 @@ extension MoneyFixer on Money {
 extension CurrencyFixer on Currency {
   Map<String, dynamic> toJson() {
     return {
-      'code': isoCode,
-      'scale': decimalDigits,
+      'isoCode': isoCode,
+      'decimalDigits': decimalDigits,
       'symbol': symbol,
       'pattern': pattern,
       'groupSeparator': groupSeparator,
@@ -76,8 +76,8 @@ extension CurrencyFixer on Currency {
 
   static Currency fromJson(Map<String, dynamic> json) {
     return Currency.create(
-      json['code'],
-      json['scale'],
+      json['isoCode'],
+      json['decimalDigits'],
       symbol: json['symbol'] ?? r'$',
       pattern: json['pattern'] ?? Currency.defaultPattern,
       groupSeparator: json['groupSeparator'] ?? ',',

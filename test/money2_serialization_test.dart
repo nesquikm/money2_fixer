@@ -69,8 +69,8 @@ void main() {
   test('Money serialization', () {
     final c = Currency.create('c100', 100, symbol: '=100=');
     final m0 = MoneyFixer.parseWithCurrencyImproved(amount, c);
-    final json = m0.toJson();
-    final m1 = MoneyFixer.fromJson(json);
+    final json = m0.toJsonImproved();
+    final m1 = MoneyFixer.fromJsonImproved(json);
     expect(m1.compareTo(m0), 0);
     expect(m1.minorUnits, BigInt.parse(minorUnits));
   });
