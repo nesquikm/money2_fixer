@@ -1,5 +1,5 @@
-import 'package:test/test.dart';
 import 'package:money2/money2.dart';
+import 'package:test/test.dart';
 
 void main() {
   const maxScale = 100;
@@ -20,7 +20,7 @@ void main() {
         final c = Currencies().find('C$scale');
         expect(c, isNotNull);
         final intsStr = ints == 0 ? '1' : '9' * ints;
-        final str0 = '1';
+        const str0 = '1';
         final str1 =
             scale == 0 ? '${intsStr}1' : '${intsStr}1.${'0' * (scale - 1)}1';
         final str2 =
@@ -35,10 +35,16 @@ void main() {
         final mDiff = m2 - m1;
         final mSum = m1 + m0;
 
-        expect(mDiff.amount, Fixed.one,
-            reason: 'Failed with $scale scale, $ints ints');
-        expect(mSum.amount, m2.amount,
-            reason: 'Failed with $scale scale, $ints ints');
+        expect(
+          mDiff.amount,
+          Fixed.one,
+          reason: 'Failed with $scale scale, $ints ints',
+        );
+        expect(
+          mSum.amount,
+          m2.amount,
+          reason: 'Failed with $scale scale, $ints ints',
+        );
       }
     }
   });

@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:test/test.dart';
 import 'package:money2/money2.dart';
 import 'package:money2_fixer/money2_fixer.dart';
+import 'package:test/test.dart';
 
 void main() {
   final amount = '${'9' * 100}.${'9' * 100}';
@@ -18,7 +18,8 @@ void main() {
   test('Fixed jsonEncode', () {
     final f0 = Fixed.parse(amount);
     final json = jsonEncode(f0.toJsonImproved());
-    final f1 = FixedFixer.fromJsonImproved(jsonDecode(json));
+    final f1 =
+        FixedFixer.fromJsonImproved(jsonDecode(json) as Map<String, dynamic>);
     expect(f1.toString(), amount);
   });
 
@@ -77,7 +78,7 @@ void main() {
     expect(m1.minorUnits, BigInt.parse(minorUnits));
   });
 
-  test('Money serialization (Money\'s toJson is faulty)', () {
+  test("Money serialization (Money's toJson is faulty)", () {
     final c = Currency.create('c100', 100, symbol: '=100=');
     Currencies().register(c);
     final m0 = MoneyFixer.parseWithCurrencyImproved(amount, c);
