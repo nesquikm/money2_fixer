@@ -1,6 +1,6 @@
-import 'package:test/test.dart';
 import 'package:money2/money2.dart';
 import 'package:money2_fixer/money2_fixer.dart';
+import 'package:test/test.dart';
 
 void main() {
   const maxScale = 100;
@@ -17,50 +17,55 @@ void main() {
     final roflWithDefaultFormatting =
         Currency.create('ROFL', 9, symbol: 'ROFL');
     expect(
-        MoneyFixer.parseWithCurrencyImproved('2.0', roflWithDefaultFormatting)
-            .formatImproved(),
-        'ROFL2.00',
-        reason: 'Failed default formatting');
+      MoneyFixer.parseWithCurrencyImproved('2.0', roflWithDefaultFormatting)
+          .formatImproved(),
+      'ROFL2.00',
+      reason: 'Failed default formatting',
+    );
   });
 
   test('test custom currency formatting', () {
     final roflWithDefaultFormatting =
         Currency.create('ROFL', 9, symbol: 'ROFL', pattern: '0.000000000 S');
     expect(
-        MoneyFixer.parseWithCurrencyImproved('2.0', roflWithDefaultFormatting)
-            .formatImproved(),
-        '2.000000000 ROFL',
-        reason: 'Failed custom formatting');
+      MoneyFixer.parseWithCurrencyImproved('2.0', roflWithDefaultFormatting)
+          .formatImproved(),
+      '2.000000000 ROFL',
+      reason: 'Failed custom formatting',
+    );
   });
 
   test('test custom currency formatting 2', () {
     final roflWithDefaultFormatting =
         Currency.create('ROFL', 9, symbol: 'ROFL', pattern: '0.000000000 S');
     expect(
-        MoneyFixer.parseWithCurrencyImproved('2.01', roflWithDefaultFormatting)
-            .formatImproved(),
-        '2.010000000 ROFL',
-        reason: 'Failed custom formatting');
+      MoneyFixer.parseWithCurrencyImproved('2.01', roflWithDefaultFormatting)
+          .formatImproved(),
+      '2.010000000 ROFL',
+      reason: 'Failed custom formatting',
+    );
   });
 
   test('test custom currency formatting 3 (trim zeros)', () {
     final roflWithDefaultFormatting =
         Currency.create('ROFL', 9, symbol: 'ROFL', pattern: '0.######### S');
     expect(
-        MoneyFixer.parseWithCurrencyImproved('2.01', roflWithDefaultFormatting)
-            .formatImproved(),
-        '2.01 ROFL',
-        reason: 'Failed custom formatting');
+      MoneyFixer.parseWithCurrencyImproved('2.01', roflWithDefaultFormatting)
+          .formatImproved(),
+      '2.01 ROFL',
+      reason: 'Failed custom formatting',
+    );
   });
 
   test('test custom explicit formatting', () {
     final roflWithDefaultFormatting =
         Currency.create('ROFL', 9, symbol: 'ROFL', pattern: '0.######### S');
     expect(
-        MoneyFixer.parseWithCurrencyImproved('2.01', roflWithDefaultFormatting)
-            .formatImproved(pattern: 'S 0.#########'),
-        'ROFL 2.01',
-        reason: 'Failed custom formatting');
+      MoneyFixer.parseWithCurrencyImproved('2.01', roflWithDefaultFormatting)
+          .formatImproved(pattern: 'S 0.#########'),
+      'ROFL 2.01',
+      reason: 'Failed custom formatting',
+    );
   });
 
   test('scale 0-$maxScale test', () {
@@ -70,10 +75,11 @@ void main() {
       final str = scale == 0 ? '0' : '0.${'0' * (scale - 1)}1';
       final fmt = scale == 0 ? '0' : '0.${'#' * scale}';
       expect(
-          MoneyFixer.parseWithCurrencyImproved(str, c!)
-              .formatImproved(pattern: fmt),
-          str,
-          reason: 'Failed with $scale scale');
+        MoneyFixer.parseWithCurrencyImproved(str, c!)
+            .formatImproved(pattern: fmt),
+        str,
+        reason: 'Failed with $scale scale',
+      );
     }
   });
 
@@ -82,12 +88,13 @@ void main() {
       final c = Currencies().find('C0');
       expect(c, isNotNull);
       final str = ints == 0 ? '0' : '9' * ints;
-      final fmt = '0';
+      const fmt = '0';
       expect(
-          MoneyFixer.parseWithCurrencyImproved(str, c!)
-              .formatImproved(pattern: fmt),
-          str,
-          reason: 'Failed with $ints ints');
+        MoneyFixer.parseWithCurrencyImproved(str, c!)
+            .formatImproved(pattern: fmt),
+        str,
+        reason: 'Failed with $ints ints',
+      );
     }
   });
 
@@ -100,10 +107,11 @@ void main() {
         final str = scale == 0 ? intsStr : '$intsStr.${'0' * (scale - 1)}1';
         final fmt = scale == 0 ? '0' : '0.${'0' * scale}';
         expect(
-            MoneyFixer.parseWithCurrencyImproved(str, c!)
-                .formatImproved(pattern: fmt),
-            str,
-            reason: 'Failed with $scale scale, $ints ints');
+          MoneyFixer.parseWithCurrencyImproved(str, c!)
+              .formatImproved(pattern: fmt),
+          str,
+          reason: 'Failed with $scale scale, $ints ints',
+        );
       }
     }
   });

@@ -1,5 +1,5 @@
-import 'package:test/test.dart';
 import 'package:money2/money2.dart';
+import 'package:test/test.dart';
 
 void main() {
   const maxScale = 100;
@@ -19,11 +19,12 @@ void main() {
       final str = scale == 0 ? '0' : '0.${'0' * (scale - 1)}1';
       final fmt = scale == 0 ? '0' : '0.${'0' * scale}';
       expect(
-          Money.fromFixedWithCurrency(Fixed.parse(str, scale: scale), c!)
-              .amount
-              .format(fmt),
-          str,
-          reason: 'Failed with $scale scale');
+        Money.fromFixedWithCurrency(Fixed.parse(str, scale: scale), c!)
+            .amount
+            .format(fmt),
+        str,
+        reason: 'Failed with $scale scale',
+      );
     }
   });
 
@@ -32,14 +33,15 @@ void main() {
       final c = Currencies().find('C0');
       expect(c, isNotNull);
       final str = ints == 0 ? '0' : '9' * ints;
-      final fmt = '#';
+      const fmt = '#';
       expect(
-          Money.fromFixedWithCurrency(Fixed.parse(str, scale: 0), c!)
-              .amount
-              .format(fmt)
-              .replaceFirst(RegExp(r'^\.'), '0.'),
-          str,
-          reason: 'Failed with $ints ints');
+        Money.fromFixedWithCurrency(Fixed.parse(str, scale: 0), c!)
+            .amount
+            .format(fmt)
+            .replaceFirst(RegExp(r'^\.'), '0.'),
+        str,
+        reason: 'Failed with $ints ints',
+      );
     }
   });
 
@@ -52,12 +54,13 @@ void main() {
         final str = scale == 0 ? intsStr : '$intsStr.${'0' * (scale - 1)}1';
         final fmt = scale == 0 ? '#' : '#.${'#' * scale}';
         expect(
-            Money.fromFixedWithCurrency(Fixed.parse(str, scale: scale), c!)
-                .amount
-                .format(fmt)
-                .replaceFirst(RegExp(r'^\.'), '0.'),
-            str,
-            reason: 'Failed with $scale scale, $ints ints');
+          Money.fromFixedWithCurrency(Fixed.parse(str, scale: scale), c!)
+              .amount
+              .format(fmt)
+              .replaceFirst(RegExp(r'^\.'), '0.'),
+          str,
+          reason: 'Failed with $scale scale, $ints ints',
+        );
       }
     }
   });
