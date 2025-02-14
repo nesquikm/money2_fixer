@@ -2,6 +2,7 @@
 
 * Fix broken by money2 toJson and fromJson.
 * Breaking: add toJsonImproved and fromJsonImproved instead of toJson and fromJson.
+* Add very good analysis lints.
 
 ## 2.0.0
 
