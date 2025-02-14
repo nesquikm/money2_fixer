@@ -8,7 +8,7 @@
       "name": "money2_fixer",
       "request": "launch",
       "type": "dart",
-      "program": "example/money2_fixer_example.dart"
+      "program": "example/money2_improver_example.dart"
     }
   ]
 }
